@@ -1,7 +1,9 @@
 const ALL_ATTRS = ["class", "id", "style"];
 const SKIP = "script, style, noscript, template, link, meta";
 
-function mix(attrs, allAttrs, skip) {
+function mix(attrs, allAttrs, skip, loop) {
+  clearInterval(window.__styleMixerTimer);
+
   const els = [...document.body.querySelectorAll("*")].filter(
     (el) => !el.matches(skip),
   );
@@ -14,22 +16,28 @@ function mix(attrs, allAttrs, skip) {
     ]);
   }
 
-  for (const attr of attrs) {
-    const values = els.map((el) => el.getAttribute(attr));
+  const shuffle = () => {
+    for (const attr of attrs) {
+      const values = els.map((el) => el.getAttribute(attr));
 
-    for (let i = values.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [values[i], values[j]] = [values[j], values[i]];
+      for (let i = values.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [values[i], values[j]] = [values[j], values[i]];
+      }
+
+      els.forEach((el, i) => {
+        if (values[i] === null) el.removeAttribute(attr);
+        else el.setAttribute(attr, values[i]);
+      });
     }
+  };
 
-    els.forEach((el, i) => {
-      if (values[i] === null) el.removeAttribute(attr);
-      else el.setAttribute(attr, values[i]);
-    });
-  }
+  shuffle();
+  if (loop) window.__styleMixerTimer = setInterval(shuffle, 100);
 }
 
 function restore() {
+  clearInterval(window.__styleMixerTimer);
   const original = window.__styleMixerOriginal;
   if (!original) return;
   for (const [el, attrs] of original) {
@@ -55,7 +63,8 @@ document.getElementById("mix").addEventListener("click", () => {
     ...document.querySelectorAll('input[name="attr"]:checked'),
   ].map((el) => el.value);
   if (attrs.length === 0) return;
-  run(mix, [attrs, ALL_ATTRS, SKIP]);
+  const loop = document.getElementById("loop").checked;
+  run(mix, [attrs, ALL_ATTRS, SKIP, loop]);
 });
 document
   .getElementById("restore")

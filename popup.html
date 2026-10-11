@@ -3,21 +3,41 @@
   <head>
     <meta charset="utf-8" />
     <style>
-      body { width: 200px; font-family: system-ui, sans-serif; padding: 8px; }
-      button { width: 100%; padding: 6px; margin-bottom: 6px; }
-      fieldset { margin: 0 0 8px; }
-      label { display: block; }
+      body {
+        width: 200px;
+        font-family: system-ui, sans-serif;
+        padding: 8px;
+      }
+      button {
+        width: 100%;
+        padding: 6px;
+        margin-bottom: 6px;
+      }
+      fieldset {
+        margin: 0 0 8px;
+      }
+      label {
+        display: block;
+      }
     </style>
   </head>
   <body>
     <fieldset>
-      <legend>入れ替える属性</legend>
+      <legend>Attributes to shuffle</legend>
       <label><input type="checkbox" name="attr" value="id" checked /> id</label>
-      <label><input type="checkbox" name="attr" value="class" checked /> class</label>
-      <label><input type="checkbox" name="attr" value="style" checked /> style</label>
+      <label
+        ><input type="checkbox" name="attr" value="class" checked />
+        class</label
+      >
+      <label
+        ><input type="checkbox" name="attr" value="style" checked />
+        style</label
+      >
     </fieldset>
-    <button id="mix">カオスにする</button>
-    <button id="restore">元に戻す</button>
+    <label><input type="checkbox" id="loop" /> auto random</label>
+    <br />
+    <button id="mix">Mix</button>
+    <button id="restore">Restore</button>
     <script src="popup.js"></script>
   </body>
 </html>
