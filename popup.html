@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { width: 200px; font-family: system-ui, sans-serif; padding: 8px; }
+      button { width: 100%; padding: 6px; margin-bottom: 6px; }
+      fieldset { margin: 0 0 8px; }
+      label { display: block; }
+    </style>
+  </head>
+  <body>
+    <fieldset>
+      <legend>入れ替える属性</legend>
+      <label><input type="checkbox" name="attr" value="id" checked /> id</label>
+      <label><input type="checkbox" name="attr" value="class" checked /> class</label>
+      <label><input type="checkbox" name="attr" value="style" checked /> style</label>
+    </fieldset>
+    <button id="mix">カオスにする</button>
+    <button id="restore">元に戻す</button>
+    <script src="popup.js"></script>
+  </body>
+</html>
